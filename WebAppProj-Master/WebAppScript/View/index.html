@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content = "ie=edge" />
+		<title>E-Prescription Writing Pad</title>
+		<!-- style -->
+		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
+		<link rel="stylesheet" href="style.css" />
+		
+	
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+		<script src="../controller/getPharmData.js"></script>
+		<script src="../controller/getPatientRecord.js"></script>
+		<script src="../controller/pharmacyClass.js"></script>
+		<script src="../controller/patientClass.js"></script>
+		<script src="../controller/sendPresToDatabase.js"></script>
+		<script src="../model/processData.js"></script>  
+
+		<!--UIKIT -->
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="uikit/css/uikit.css" />
+
+
+	</head>
+	<body class="uk-background-primary uk-container">
+		<div><h1 class="uk-heading-medium">E-Prescription</h1></div>
+		<div> 
+			<div>
+				<label for="pharmDropDownList"><h4 class="uk-heading-bullet"><b>Please choose patient's preferred pharmacy</b></h4></label>
+				<select id="pharmDropDownList" onchange="getPharmList(parsePharmList)"> </select>
+				
+				<div class="uk-margin-remove-top uk-margin-left">
+					<p id="name"></p>
+					<p id="address"></p>
+					<p id="city"></p>
+					<p id="zipcode"></p>
+					<p id="state"></p>
+					<p id="phone"></p>
+					<p id="email"></p>
+				</div>
+			</div>
+
+			<div>
+				<h4 class="uk-heading-bullet"><b>Please enter patient's phone number</b></h4>
+				<input id="phoneId" required>
+				<button class="uk-button uk-button-primary uk-button-small" onclick="getPhoneNum()">OK</button>
+
+				<div class="uk-margin-left">
+					<p id="error"></p>
+					<p id="notFound"></p>
+					<p id="pname"></p>
+					<p id="pmail"></p>
+					<p id="pphone"></p>
+				</div>
+
+			</div>
+			
+			<!-- Uploading and previwing the prescription-->
+			<h3 id="uploadimage"></h3>
+			<div><img id="output"/></div>
+			
+			<script>
+			window.onload = function() {
+
+				 //our entrypoint
+				var myResult = getPharmList(parsePharmList);
+
+				// hidding canvas until get some valid data
+				showingHiddingCanvas("none");
+			};			
+			</script>	
+
+			<!-- Content -->
+		<div id="display-mode">
+			<div>
+				<h4 class="uk-heading-bullet"><b>Prescription Canvas</b></h4>
+				<p class="uk-margin-left">Draw prescription on canvas, when done click SUBMIT</p>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<canvas id="prescription-canvas" width="600" height="800" ></canvas>
+				</div>
+			</div>
+
+
+			<div class="dropdown uk-margin-small-bottom">
+				<button id="dropbtn" class="uk-button uk-button-secondary uk-button-small"><canvas id="current-stroke-size" width="30" height="30"></canvas><b>Click to change stroke size and color</b></button>
+				<div id="dropdown-content" class="dropdown-content">
+					<div class="dropdown-subcontent">
+						<canvas style="overflow: center" id="stroke-size" width="10" height="10"></canvas>
+						<input type="range" min="2" max="10" value="2" id="strokeRange">
+					</div>
+					<div class="dropdown-subcontent">
+						<a name="colorPalet" style="background-color: #AAAAAA" value="#AAAAAA"></a>
+						<a name="colorPalet" style="background-color: #888888" value="#888888"></a>
+						<a name="colorPalet" style="background-color: #666666" value="#666666"></a>
+						<a name="colorPalet" style="background-color: #444444" value="#444444"></a>
+						<a name="colorPalet" style="background-color: #222222" value="#222222"></a>
+					</div>
+					<div class="dropdown-subcontent">
+						<a name="colorPalet" style="background-color: #AA0000" value="#AA0000"></a>
+						<a name="colorPalet" style="background-color: #880000" value="#880000"></a>
+						<a name="colorPalet" style="background-color: #660000" value="#660000"></a>
+						<a name="colorPalet" style="background-color: #440000" value="#440000"></a>
+						<a name="colorPalet" style="background-color: #220000" value="#220000"></a>
+					</div>
+					<div class="dropdown-subcontent">
+						<a name="colorPalet" style="background-color: #00AA00" value="#00AA00"></a>
+						<a name="colorPalet" style="background-color: #008800" value="#008800"></a>
+						<a name="colorPalet" style="background-color: #006600" value="#006600"></a>
+						<a name="colorPalet" style="background-color: #004400" value="#004400"></a>
+						<a name="colorPalet" style="background-color: #002200" value="#002200"></a>
+					</div>
+					<div class="dropdown-subcontent">
+						<a name="colorPalet" style="background-color: #0000AA" value="#0000AA"></a>
+						<a name="colorPalet" style="background-color: #000088" value="#000088"></a>
+						<a name="colorPalet" style="background-color: #000066" value="#000066"></a>
+						<a name="colorPalet" style="background-color: #000044" value="#000044"></a>
+						<a name="colorPalet" style="background-color: #000022" value="#000022"></a>
+					</div>
+				</div>
+			</div>
+
+			<hr class="uk-divider">
+			<div class="uk-button-group">
+				<button class="uk-button uk-button-primary" id="prescription-submitBtn">Submit Prescription</button>
+				<button class="uk-button uk-button-danger uk-button-small" id="prescription-clearBtn">Clear</button>
+			</div>
+		</div>	
+		
+		<hr class="uk-divider">
+		<div id="save-print-div">
+			<h3 id= "yourcanvas"></h3>
+			<div id="save-print" class="uk-button-group">
+				<a id="save" class="uk-button uk-button-secondary uk-button-small" href="" download>Save As</a>
+				<button id="print" class="uk-button uk-button-secondary uk-button-small">Print</button>
+			</div>
+
+			<hr class="uk-divider">
+			<div class="row">
+				<div class="col-md-12">
+					<img id="prescription-image" src="" > </img>
+				</div>
+			</div>
+		</div>
+	
+	<!-- Scripts for canvas -->
+	<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="../model/canvas.js"></script>
+	
+
+	</body>
+</html>

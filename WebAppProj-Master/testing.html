@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content = "ie=edge" />
+		<title>Testing Pinaka Project</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	 
+	</head>
+	<body>
+
+		<h3>Enter Patient Phone Number to display prescription order</h3>
+		<input id="phoneId" required>
+		<button onclick="getPhoneNum()">OK</button>
+		<p id="error"></p>
+		<p id="notFound"></p>
+		<div id="div1"></div>
+		<p id="orderdate"></p>
+		<p id="pphone"></p>
+		
+
+	
+		<script>
+		
+			function getPhoneNum() {
+				
+				let inpObj = document.getElementById("phoneId");
+				
+				if (!inpObj.checkValidity()) {
+					document.getElementById("error").innerHTML = inpObj.validationMessage;
+				} else{
+					//passing phone number to AJAX
+					getPrescByPatientPhoneNum(inpObj.value, processPrescOrderData);		// passing phone number to AJAX
+				} 
+			}
+
+
+
+			/**
+			*  connect to database server, call php file to retrieve patient record in JSON format
+			**/
+			function getPrescByPatientPhoneNum(phonenum, callback) {
+
+				$.ajax({
+						url: 'http://98.217.116.98/retrieve_prescription_order.php',
+						type: "POST", 
+						data: {phonenum: phonenum},	// use phone numer as the key to query
+						dataType: "json",
+						success: function(response){
+
+						// send the response (JSON) to the callback
+							callback(response);
+							},
+						error: function () {
+
+							console.log("error");
+							document.getElementById("notFound").innerHTML = "Patient not found";
+
+						}
+				});
+
+			};
+					
+					
+					
+			function processPrescOrderData(jsonObj) {
+					
+				//console.log(jsonObj.result[0]);
+				
+				for (var i = 0; i < jsonObj.result.length; i++) {
+				
+					displayOrders(jsonObj, i);
+					
+						
+				}
+			}
+
+			function displayOrders(myJsonObj, incr){
+			
+				var para = document.createElement("p");
+				var cusname = document.createTextNode("Patient Name:" + " " + myJsonObj.result[incr].customer_name +'\r\n');
+				var orderdate = document.createTextNode(" | Order Date:" + " " + myJsonObj.result[incr].order_date);
+				var ordertime = document.createTextNode(" | Order Time:" + " " + myJsonObj.result[incr].order_time);
+				var pharmname = document.createTextNode(" | Pharmacy Name:" + " " + myJsonObj.result[incr].pharmacy_name);
+				var pharmphone = document.createTextNode(" | Pharmacy Phone:" + " " + myJsonObj.result[incr].pharm_phone);
+				var pharmaddr = document.createTextNode(" | Pharmacy Address:" + " " + myJsonObj.result[incr].pharmacy_address);
+				var prescorderno = document.createTextNode(" | Prescription Order Number:" + " " + myJsonObj.result[incr].presc_order_no);
+				var prescimage = document.createTextNode(" | Prescription Image:" + " " + myJsonObj.result[incr].prescription_image);
+				var orderstatus = document.createTextNode(" | Order Status:" + " " + myJsonObj.result[incr].order_status);
+				para.appendChild(cusname);
+				para.appendChild(orderdate);
+				para.appendChild(ordertime);
+				para.appendChild(pharmname);
+				para.appendChild(pharmphone);
+				para.appendChild(pharmaddr);
+				para.appendChild(prescorderno);
+				para.appendChild(prescimage);
+				para.appendChild(orderstatus);
+				var element = document.getElementById("div1");
+				element.appendChild(para);
+				
+			}
+
+		</script>	
+
+	</body>
+</html>

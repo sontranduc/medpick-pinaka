@@ -1,0 +1,128 @@
+/*h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: red; font-size: 3.5em
+}
+
+h4 {
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	color: #336699; font-size: 2em
+}*/
+
+/*body {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: lightgray;
+}*/
+
+#prescription-canvas {
+	border: 2px dotted #CCCCCC;
+	border-radius: 5px;
+	cursor: crosshair;
+	background-color: #EEF0F1;
+	position: relative;
+	
+}
+
+#prescription-dataUrl {		
+	width: 100%;
+}
+
+.btn-group {
+	border: 2px dotted #DDDDDD;
+	border-radius: 5px;
+	width: 400px;
+}
+
+.btn-group button {
+  background-color: #ffffff; /* Grey background */
+  border: 1px solid grey; /* Grey border */
+  color: black; /* Black text */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 100%; /* Set a width if needed */
+  position: center;
+  float: left; /* Make the buttons appear side by side */
+}
+
+ /* Dropdown Button */
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: left;
+}
+.dropdown-content .dropdown-subcontent {
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}

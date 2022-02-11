@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content = "ie=edge" />
+		<title>Retrieve file from GD and send it to Pinaka database</title>
+		<link rel="stylesheet" href="style.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="../controller/getPharmData.js"></script>
+		<script src="../controller/getPatientRecord.js"></script>
+		<script src="../controller/pharmacyClass.js"></script>
+		<script src="../controller/patientClass.js"></script>
+		<script src="../controller/sendPrescription.js"></script>
+		<script src="../model/processData.js"></script> 
+	 	
+	 	<!--UIKIT -->
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="uikit/css/uikit.css" />
+
+	</head>
+	<body class="uk-background-primary uk-container" onload="init()">
+		<div><h1 class="uk-heading-medium">GDRIVE RETRIEVAL</h1></div>
+		<h3 class="uk-heading-secondary">Retrieve Prescription from GDrive and upload it to Pinaka Database</h3>
+		<div>
+			<h4 class="uk-heading-bullet"><b>Please choose patient's preferred pharmacy</b></h4>
+			<select id="pharmDropDownList" onchange= "getPharmList(parsePharmList)"> </select>
+			
+			<div class="uk-margin uk-margin-left">
+				<p id="name" ></p>
+				<p id="address"></p>
+				<p id="city"></p>
+				<p id="zipcode"></p>
+				<p id="state"></p>
+				<p id="phone"></p>
+				<p id="email"></p>
+			</div>
+		</div>
+		
+		<div>
+			<h4 class="uk-heading-bullet"><b>Please enter patient's phone number</b></h4>
+			<input id="phoneId" placeholder="---phone number---" required>
+			<button class="uk-button uk-button-primary uk-button-small" onclick="getPhoneNum()">OK</button>
+			
+			<div class="uk-margin uk-margin-left">
+				<p id="error"></p>
+				<p id="pname"></p>
+				<p id="pmail"></p>
+				<p id="pphone"></p>
+			</div>
+		</div>
+		
+		<di>
+			<!-- Uploading and previwing the prescription-->
+			<h4 class="uk-heading" id="uploadimage"><b></b></h4>
+			<div><img id="output"/></div>
+		</di>
+
+		<script>
+		window.onload = function() {
+
+			// our entrypoint
+			var myResult = getPharmList(parsePharmList);
+
+			// this will always be undefined since the async AJAX is not done. 
+		};
+		</script>	
+
+	</body>
+</html>

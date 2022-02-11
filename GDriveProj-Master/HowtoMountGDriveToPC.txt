@@ -1,0 +1,7 @@
+Using command:
+
+On the cmd windows:
+
+Type: subst g: "C:\Users\username\Google Drive"
+
+Type: "subst x: /d", replacing "x:" with the drive letter you want to remove.
